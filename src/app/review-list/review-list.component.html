@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a routerLink="/">Hem</a></li>
+    <li class="breadcrumb-item active">Recensioner</li>
+  </ol>
+</nav>
+
+<button [routerLink]="['/reviews/add']" mat-raised-button color="primary" style="float: right" id="add"><mat-icon>library_add</mat-icon>Ny recension</button>
+
+<h1>{{title}}</h1>
+<div *ngIf="loading; else list">
+  <p>Loading...</p>
+</div>
+
+<ng-template #list>
+    <div *ngIf="feedback.message" class="alert alert-{{feedback.type}}">{{ feedback.message }}</div>
+    <table mat-table [dataSource]="reviews">
+    <ng-container matColumnDef="id">
+      <mat-header-cell *matHeaderCellDef> ID </mat-header-cell>
+      <mat-cell *matCellDef="let item"> {{ item.id }} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="title">
+      <mat-header-cell *matHeaderCellDef> Bok-Titel </mat-header-cell>
+      <mat-cell *matCellDef="let item"> {{ item.bokNamn }} </mat-cell>
+    </ng-container>
+      <ng-container matColumnDef="reviewtext">
+      <mat-header-cell *matHeaderCellDef> Recensionstext </mat-header-cell>
+      <mat-cell *matCellDef="let item"> {{ item.recensionsText }} </mat-cell>
+    </ng-container>
+      <ng-container matColumnDef="author">
+      <mat-header-cell *matHeaderCellDef> Författare </mat-header-cell>
+      <mat-cell *matCellDef="let item"> {{ item.foerfattarNamn }} </mat-cell>
+    </ng-container>
+      
+    <ng-container matColumnDef="actions">
+      <mat-header-cell *matHeaderCellDef> Ta Bort </mat-header-cell>
+      <mat-cell *matCellDef="let item">
+        <button (click)="delete(item)" mat-button color="warn"><mat-icon>delete</mat-icon>Ta bort</button>
+      </mat-cell>
+    </ng-container>
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </table>
+</ng-template>

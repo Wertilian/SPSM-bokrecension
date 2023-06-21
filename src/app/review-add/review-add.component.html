@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a routerLink="/">Hem</a></li>
+    <li class="breadcrumb-item"><a routerLink="/reviews">Recensioner</a></li>
+    <li class="breadcrumb-item active">Ny recension</li>
+  </ol>
+</nav>
+
+<h1>Ny Bokrecension</h1>
+<div *ngIf="feedback.message" class="alert alert-{{feedback.type}}">{{ feedback.message }}</div>
+<form *ngIf="review" #editForm="ngForm" (ngSubmit)="save()">
+    <mat-form-field class="full-width" *ngIf="review.id">
+      <mat-label>ID</mat-label>
+      <input matInput [(ngModel)]="review.id" id="id" name="id" placeholder="ID" readonly>
+    </mat-form-field>
+    <mat-form-field class="full-width input-text-box">
+      <mat-label>Titel</mat-label>
+      <input matInput [(ngModel)]="review.bokNamn" id="titel" name="titel" placeholder="Titel på bok" required>
+    </mat-form-field>
+    <mat-form-field class="full-width input-text-box">
+      <mat-label>Recension</mat-label>
+      <input matInput [(ngModel)]="review.recensionsText" id="recension" name="recension" placeholder="Din recension" required>
+    </mat-form-field>
+    <mat-form-field class="full-width input-text-box">
+      <mat-label>Författare</mat-label>
+      <input matInput [(ngModel)]="review.foerfattarNamn" id="foerfattare" name="foerfattare" placeholder="Namn på Författare" required>
+    </mat-form-field>
+
+    <div class="button-row" role="group">
+        <button type="submit" mat-raised-button color="primary" [disabled]="!editForm.form.valid" id="save">Save</button>
+        <button class="cancel-button" type="button" mat-button color="accent" (click)="cancel()" id="cancel">Avbryt</button>
+    </div>
+</form>
